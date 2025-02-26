@@ -75,10 +75,6 @@ class Jammer:
             return self.interfere(message, interference), True
 
     def directional_jamming(self, message, target_lat=37.7749, target_long=-122.4194, jamming_radius=0.01):
-        """
-        Simulates directional jamming by targeting a specific geographic area.
-        Only messages within the jamming radius will be affected.
-        """
         drone_lat = message['latitude']
         drone_long = message['longitude']
 
