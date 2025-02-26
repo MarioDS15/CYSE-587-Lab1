@@ -74,6 +74,20 @@ class Jammer:
             print("Pulsed Noise Jamming")
             return self.interfere(message, interference), True
 
-    def directional_jamming(self, message):
-        # put code here
-        return self.interfere(message, 0)
+    def directional_jamming(self, message, target_lat=37.7749, target_long=-122.4194, jamming_radius=0.01):
+        """
+        Simulates directional jamming by targeting a specific geographic area.
+        Only messages within the jamming radius will be affected.
+        """
+        drone_lat = message['latitude']
+        drone_long = message['longitude']
+
+        # Calculate distance between target location and drone position
+        distance = math.sqrt((drone_lat - target_lat)**2 + (drone_long - target_long)**2)
+
+        if distance <= jamming_radius:
+            interference = self.noise_intensity * random.uniform(0.8, 1.2)  # Random noise level
+            print("[Jammer] Directional Jamming Active - Target in range!")
+            return self.interfere(message, interference), True
+        else:
+            print("[Jammer] Drone outside jamming range - No interference.")
